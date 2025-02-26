@@ -171,14 +171,14 @@ const getSehriTime = (day: { sehri: Date; fajr: Date; iftar: Date }) => {
   );
 };
 
-const getfajrTime = (day: { sehri: Date; fajr: Date; iftar: Date }) => {
-  return (
-    <span>
-      {padZero(day.fajr.getHours().toString())}:
-      {padZero(day.fajr.getMinutes().toString())}
-    </span>
-  );
-};
+// const getfajrTime = (day: { sehri: Date; fajr: Date; iftar: Date }) => {
+//   return (
+//     <span>
+//       {padZero(day.fajr.getHours().toString())}:
+//       {padZero(day.fajr.getMinutes().toString())}
+//     </span>
+//   );
+// };
 
 const getIftarTime = (day: { sehri: Date; fajr: Date; iftar: Date }) => {
   return (
@@ -190,10 +190,18 @@ const getIftarTime = (day: { sehri: Date; fajr: Date; iftar: Date }) => {
 };
 
 const getDayString = (day: { sehri: Date; iftar: Date }) => {
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const days = [
+    "रविवार",
+    "सोमवार",
+    "मंगलवार",
+    "बुधवार",
+    "गुरुवार",
+    "जुम्मा",
+    "शनिवार",
+  ];
   if (day.sehri.getDay() === 5)
     return (
-      <span className="text-green-500  bg-green-800/50 px-2 rounded-full">
+      <span className="text-green-500  bg-teal-900/80 px-2 rounded-full">
         {days[day.sehri.getDay()]}
       </span>
     );
@@ -206,12 +214,12 @@ const Main = () => {
       <table className="table-auto w-full bg-gray-900 text-center">
         <thead>
           <tr>
-            <th>Ramadan</th>
-            <th>Date</th>
-            <th>Day</th>
-            <th className="text-amber-100">Sehri</th>
-            <th className="text-red-200">Fajr</th>
-            <th className="text-blue-300">Iftar</th>
+            <th>हिजरी तारीख</th>
+            <th>अंग्रेजी तारीख</th>
+            <th>वार</th>
+            <th className="text-amber-100">सेहरी</th>
+            {/* <th className="text-red-200">Fajr</th> */}
+            <th className="text-blue-300">इफ़्तार</th>
           </tr>
         </thead>
         <tbody>
@@ -220,11 +228,11 @@ const Main = () => {
               key={index}
               className="bg-white odd:bg-slate-700 even:bg-slate-800"
             >
-              <td>Ramadan {padZero((index + 1).toString())}</td>
-              <td>{"March " + day.sehri.getDate()}</td>
+              <td>{(index + 1).toString()} रमदान</td>
+              <td>{day.sehri.getDate() + " मार्च"}</td>
               <td>{getDayString(day)}</td>
               <td className="text-amber-100">{getSehriTime(day)}</td>
-              <td className="text-red-200">{getfajrTime(day)}</td>
+              {/* <td className="text-red-200">{getfajrTime(day)}</td> */}
               <td className="text-blue-300">{getIftarTime(day)}</td>
             </tr>
           ))}
