@@ -1,5 +1,13 @@
+import Header from "./components/Header";
+import Main from "./components/Main";
+
 const App = () => {
-  return <div>Churu Sehri Iftar Timings</div>;
+  return (
+    <>
+      <Header />
+      <Main />
+    </>
+  );
 };
 
 export default App;
