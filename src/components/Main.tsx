@@ -196,7 +196,7 @@ const getDayString = (day: { sehri: Date; iftar: Date }) => {
 
 const Main = () => {
   return (
-    <main className="mx-3 mb-6 md:">
+    <main className="mx-3 mb-6 max-w-2xl md:mx-auto">
       <table className="table-auto w-full bg-gray-900 text-center">
         <thead>
           <tr>
