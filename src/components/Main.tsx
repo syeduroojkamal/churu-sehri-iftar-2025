@@ -191,6 +191,12 @@ const getIftarTime = (day: { sehri: Date; fajr: Date; iftar: Date }) => {
 
 const getDayString = (day: { sehri: Date; iftar: Date }) => {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  if (day.sehri.getDay() === 5)
+    return (
+      <span className="text-green-500  bg-green-800/50 px-2 rounded-full">
+        {days[day.sehri.getDay()]}
+      </span>
+    );
   return days[day.sehri.getDay()];
 };
 
@@ -203,10 +209,9 @@ const Main = () => {
             <th>Ramadan</th>
             <th>Date</th>
             <th>Day</th>
-            <th>Sehri</th>
-            <th>Fajr</th>
-
-            <th>Iftar</th>
+            <th className="text-amber-100">Sehri</th>
+            <th className="text-red-200">Fajr</th>
+            <th className="text-blue-300">Iftar</th>
           </tr>
         </thead>
         <tbody>
@@ -218,9 +223,9 @@ const Main = () => {
               <td>Ramadan {padZero((index + 1).toString())}</td>
               <td>{"March " + day.sehri.getDate()}</td>
               <td>{getDayString(day)}</td>
-              <td>{getSehriTime(day)}</td>
-              <td>{getfajrTime(day)}</td>
-              <td>{getIftarTime(day)}</td>
+              <td className="text-amber-100">{getSehriTime(day)}</td>
+              <td className="text-red-200">{getfajrTime(day)}</td>
+              <td className="text-blue-300">{getIftarTime(day)}</td>
             </tr>
           ))}
         </tbody>
