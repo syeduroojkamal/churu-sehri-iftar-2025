@@ -211,29 +211,30 @@ const getDayString = (day: { sehri: Date; iftar: Date }) => {
 const Main = () => {
   return (
     <main className="mx-3 mb-6 max-w-2xl md:mx-auto">
-      <table className="table-auto w-full bg-gray-900 text-center">
+      <table className="table-auto w-full text-center">
         <thead>
-          <tr>
-            <th>हिजरी तारीख</th>
+          <tr className="bg-slate-700">
+            <th className="rounded-l-md">हिजरी तारीख</th>
             <th>अंग्रेजी तारीख</th>
             <th>वार</th>
             <th className="text-amber-100">सेहरी</th>
             {/* <th className="text-red-200">Fajr</th> */}
-            <th className="text-blue-300">इफ़्तार</th>
+            <th className="text-blue-300 rounded-r-md">इफ़्तार</th>
           </tr>
         </thead>
         <tbody>
           {dates.map((day, index) => (
-            <tr
-              key={index}
-              className="bg-white odd:bg-slate-700 even:bg-slate-800"
-            >
-              <td>{(index + 1).toString() + " रमज़ान"}</td>
+            <tr key={index} className="even:bg-slate-700">
+              <td className="rounded-l-md">
+                {(index + 1).toString() + " रमज़ान"}
+              </td>
               <td>{day.sehri.getDate() + " मार्च"}</td>
               <td>{getDayString(day)}</td>
               <td className="text-amber-100">{getSehriTime(day)}</td>
               {/* <td className="text-red-200">{getfajrTime(day)}</td> */}
-              <td className="text-blue-300">{getIftarTime(day)}</td>
+              <td className="text-blue-300 rounded-r-md">
+                {getIftarTime(day)}
+              </td>
             </tr>
           ))}
         </tbody>
