@@ -228,7 +228,7 @@ const Main = () => {
               key={index}
               className="bg-white odd:bg-slate-700 even:bg-slate-800"
             >
-              <td>{(index + 1).toString()} रमदान</td>
+              <td>{(index + 1).toString() + " रमज़ान"}</td>
               <td>{day.sehri.getDate() + " मार्च"}</td>
               <td>{getDayString(day)}</td>
               <td className="text-amber-100">{getSehriTime(day)}</td>
