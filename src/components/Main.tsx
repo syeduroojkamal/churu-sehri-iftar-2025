@@ -151,6 +151,8 @@ const dates = [
   },
 ];
 
+const today = new Date().getDate();
+
 const padZero = (input: string) => {
   if (input.length === 1) return "0" + input;
   return input;
@@ -224,7 +226,14 @@ const Main = () => {
         </thead>
         <tbody>
           {dates.map((day, index) => (
-            <tr key={index} className="even:bg-slate-700">
+            <tr
+              key={index}
+              className={
+                today === day.sehri.getDate()
+                  ? "even:bg-slate-700 border-2 border-green-300 animate-pulse"
+                  : "even:bg-slate-700"
+              }
+            >
               <td className="rounded-l-md">
                 {(index + 1).toString() + " रमज़ान"}
               </td>
