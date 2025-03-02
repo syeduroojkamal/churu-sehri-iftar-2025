@@ -3,65 +3,71 @@ import padZero from "../utils/padZero";
 import dates from "../data/dates";
 
 const Countdown = () => {
-  const [timeLeft, setTimeLeft] = useState<
-    | {
-        hours: number;
-        minutes: number;
-        seconds: number;
-      }
-    | null
-    | "endOfTheDay"
-  >(null);
+  const [timeLeft, setTimeLeft] = useState<{
+    hours: number;
+    minutes: number;
+    seconds: number;
+  } | null>(null);
+
+  const currentTime = new Date();
+
+  const today = dates.find(
+    (day) => day.sehri.getDate() === new Date().getDate()
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const now = new Date();
-      const today = dates.find((day) => day.sehri.getDate() === now.getDate());
-      const nextSehri = dates.find((day) => day.sehri > now)?.sehri;
-      const nextIftar = today?.iftar;
+      if (!today) return;
 
-      if (!nextSehri && !nextIftar) {
-        setTimeLeft(null);
-        return;
-      }
+      const currentTime = new Date();
 
-      let targetTime = nextSehri;
-
-      if (today) {
-        if (now > today.sehri) {
-          targetTime = today.iftar;
-        }
-        const endOfTheDay = "endOfTheDay";
-        if (now > today.iftar) return setTimeLeft(endOfTheDay);
-      }
-
-      if (targetTime) {
-        const diff = targetTime.getTime() - now.getTime();
+      const calculateTimeLeft = (targetTime: Date) => {
+        const diff = targetTime.getTime() - currentTime.getTime();
         const hours = Math.floor(diff / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
         setTimeLeft({ hours, minutes, seconds });
+      };
+
+      if (currentTime < today.sehri) {
+        calculateTimeLeft(today.sehri);
+        return;
       }
+
+      if (currentTime < today.iftar) {
+        calculateTimeLeft(today.iftar);
+        return;
+      }
+
+      setTimeLeft(null);
+      return;
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [today]);
 
-  if (timeLeft === "endOfTheDay") return <span>दिन का अंत</span>;
+  if (!today) return null;
 
   if (!timeLeft) return <span className="animate-pulse">Loading...</span>;
-  // if (sehri time has passed) show iftar time
-  return (
+
+  const CountdownDisplay = ({ label }: { label: string }) => (
     <div>
-      <span>
-        {timeLeft.hours >= 12 ? "इफ़्तार" : "सेहरी"} में समय बाकी ⌛ :{" "}
-      </span>
+      <span>{label} ⌛ : </span>
       <span>{padZero(timeLeft.hours.toString())}:</span>
       <span>{padZero(timeLeft.minutes.toString())}:</span>
       <span>{padZero(timeLeft.seconds.toString())}</span>
     </div>
   );
+
+  if (currentTime < today.sehri) {
+    return <CountdownDisplay label="सेहरी में समय बाकी" />;
+  }
+
+  if (currentTime < today.iftar) {
+    return <CountdownDisplay label="इफ़्तार में समय बाकी" />;
+  }
+
+  return <span>दिन का अंत</span>;
 };
 
 export default Countdown;
