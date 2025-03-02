@@ -1,3 +1,6 @@
+import padZero from "../utils/padZero";
+import Countdown from "./Countdown";
+
 const dates = [
   {
     sehri: new Date("Mar 02 2025 05:33:00 GMT+0530"),
@@ -152,11 +155,6 @@ const dates = [
 ];
 
 const today = new Date().getDate();
-
-const padZero = (input: string) => {
-  if (input.length === 1) return "0" + input;
-  return input;
-};
 
 const militaryToStandardTime = (input: string) => {
   const num = parseInt(input);
