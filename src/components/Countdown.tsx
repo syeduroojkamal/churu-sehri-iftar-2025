@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import padZero from "../utils/padZero";
+import dates from "../data/dates";
 
 const Countdown = () => {
   const [timeLeft, setTimeLeft] = useState<
