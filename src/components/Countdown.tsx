@@ -3,11 +3,15 @@ import padZero from "../utils/padZero";
 import dates from "../data/dates";
 
 const Countdown = () => {
-  const [timeLeft, setTimeLeft] = useState<{
-    hours: number;
-    minutes: number;
-    seconds: number;
-  } | null>(null);
+  const [timeLeft, setTimeLeft] = useState<
+    | {
+        hours: number;
+        minutes: number;
+        seconds: number;
+      }
+    | "dayEnd"
+    | null
+  >(null);
 
   const currentTime = new Date();
 
@@ -39,7 +43,7 @@ const Countdown = () => {
         return;
       }
 
-      setTimeLeft(null);
+      setTimeLeft("dayEnd");
       return;
     }, 1000);
 
@@ -49,6 +53,8 @@ const Countdown = () => {
   if (!today) return null;
 
   if (!timeLeft) return <span className="animate-pulse">Loading...</span>;
+
+  if (timeLeft === "dayEnd") return;
 
   const CountdownDisplay = ({ label }: { label: string }) => (
     <div>
@@ -66,8 +72,6 @@ const Countdown = () => {
   if (currentTime < today.iftar) {
     return <CountdownDisplay label="इफ़्तार में समय बाकी" />;
   }
-
-  return <span>दिन का अंत</span>;
 };
 
 export default Countdown;
